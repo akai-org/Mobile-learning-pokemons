@@ -52,8 +52,6 @@ fun PokemonListItem(
                 Text(text = "XP: ${pokemon.baseExperience}", style = MaterialTheme.typography.body1)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Weight: ${pokemon.weight}", style = MaterialTheme.typography.body1)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Skills: ${pokemon.abilities.size}", style = MaterialTheme.typography.body1)
             }
         }
     }
