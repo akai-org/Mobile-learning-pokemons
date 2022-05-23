@@ -28,7 +28,6 @@ class PokemonRepositoryImpl(
         return flow {
             emit(Resource.Loading(true))
 
-            Log.i("REPO", "check if empty")
             val localPokemons = dao.searchPokemons(query)
             emit(Resource.Success(data = localPokemons.map { it.toPokemon() }))
 
@@ -40,22 +39,17 @@ class PokemonRepositoryImpl(
                 return@flow
             }
 
-            Log.i("REPO", "call api")
             val remotePokemons = try {
                 val pokemons = mutableListOf<PokemonDto>()
                 val responsePokemonList = api.getPokemons()
-                Log.i("REPO", "response ${responsePokemonList}")
 
                 responsePokemonList.results.forEach { pokemonResult ->
-                    Log.i("REPO", "read pokemon ${pokemonResult.name}")
 
                     val index =
                         pokemonResult.url.substringAfter("${PokemonApi.BASE_URL}/api/v2/pokemon/").substringBefore("/").toInt()
-                    Log.i("REPO", "$index")
 
                     val pokemonDto = api.getPokemonByIndex(index)
                     pokemons.add(pokemonDto)
-                    Log.i("REPO", "add pokemon ${pokemonDto.name}")
 
                 }
                 pokemons
