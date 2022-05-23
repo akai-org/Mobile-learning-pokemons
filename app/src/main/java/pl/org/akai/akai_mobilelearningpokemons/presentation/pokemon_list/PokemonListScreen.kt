@@ -37,7 +37,6 @@ fun PokemonListScreen() {
                 imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
                 baseExperience = 64,
                 weight = 120,
-                abilities = emptyList()
             ),
             Pokemon(
                 name = "Pikachu",
@@ -45,7 +44,6 @@ fun PokemonListScreen() {
                 imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
                 baseExperience = 64,
                 weight = 120,
-                abilities = emptyList()
             ),
             Pokemon(
                 name = "Pikachu",
@@ -53,7 +51,6 @@ fun PokemonListScreen() {
                 imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
                 baseExperience = 64,
                 weight = 120,
-                abilities = emptyList()
             ),
             Pokemon(
                 name = "Pikachu",
@@ -61,14 +58,12 @@ fun PokemonListScreen() {
                 imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
                 baseExperience = 64,
                 weight = 120,
-                abilities = emptyList()
             ),Pokemon(
                 name = "Pikachu",
                 description = "a yellow one",
                 imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
                 baseExperience = 64,
                 weight = 120,
-                abilities = emptyList()
             )
 
         ) )

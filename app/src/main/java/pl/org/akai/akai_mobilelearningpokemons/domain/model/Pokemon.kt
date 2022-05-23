@@ -7,6 +7,5 @@ data class Pokemon(
     val imageUrl: String,
     val baseExperience: Int,
     val weight: Int,
-    val abilities: List<String>
 ) {
 }
