@@ -25,7 +25,6 @@ import pl.org.akai.akai_mobilelearningpokemons.data.repository.PokemonRepository
 fun PokemonListScreen(
     viewModel: PokemonListScreenViewModel
 ) {
-
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
