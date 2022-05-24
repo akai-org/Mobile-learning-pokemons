@@ -16,73 +16,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import pl.org.akai.akai_mobilelearningpokemons.domain.model.Pokemon
-import kotlin.coroutines.CoroutineContext
+import pl.org.akai.akai_mobilelearningpokemons.data.local.getPokemonDatabase
+import pl.org.akai.akai_mobilelearningpokemons.data.remote.getPokemonApi
+import pl.org.akai.akai_mobilelearningpokemons.data.repository.PokemonRepositoryImpl
 
 @Composable
-fun PokemonListScreen() {
-    var isRefreshing by remember {
-        mutableStateOf( false )
-    }
-    var textFieldValue by remember {
-        mutableStateOf( "" )
-    }
-    var pokemonList by remember {
-        mutableStateOf( mutableStateListOf<Pokemon>(
-            Pokemon(
-                name = "Pikachu",
-                description = "a yellow one",
-                imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
-                baseExperience = 64,
-                weight = 120,
-            ),
-            Pokemon(
-                name = "Pikachu",
-                description = "a yellow one",
-                imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
-                baseExperience = 64,
-                weight = 120,
-            ),
-            Pokemon(
-                name = "Pikachu",
-                description = "a yellow one",
-                imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
-                baseExperience = 64,
-                weight = 120,
-            ),
-            Pokemon(
-                name = "Pikachu",
-                description = "a yellow one",
-                imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
-                baseExperience = 64,
-                weight = 120,
-            ),Pokemon(
-                name = "Pikachu",
-                description = "a yellow one",
-                imageUrl = "https://m.media-amazon.com/images/I/61VF0lHZRTL._AC_SX679_.jpg",
-                baseExperience = 64,
-                weight = 120,
-            )
-
-        ) )
-    }
-
+fun PokemonListScreen(
+    viewModel: PokemonListScreenViewModel
+) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    val state = viewModel.state
     val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = isRefreshing
+        isRefreshing = state.isRefreshing
     )
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         OutlinedTextField(
-            value = textFieldValue,
+            value = state.textFieldValue,
             onValueChange = { value ->
-                textFieldValue = value
+                viewModel.onEvent(PokemonListScreenEvent.OnTextFieldValueChange(value))
             },
             modifier = Modifier
                 .padding(16.dp)
@@ -96,25 +53,26 @@ fun PokemonListScreen() {
 
         SwipeRefresh(
             state = swipeRefreshState,
-            onRefresh = { }
+            onRefresh = { viewModel.onEvent(PokemonListScreenEvent.OnSwipeRefreshed) }
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(pokemonList.size) { i ->
-                    val pokemon = pokemonList[i]
+                items(state.pokemonList.size) { i ->
+                    val pokemon = state.pokemonList[i]
                     PokemonListItem(
                         pokemon = pokemon,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
+                                viewModel.onEvent(PokemonListScreenEvent.OnPokemonClick)
                                 coroutineScope.launch {
                                     Toast.makeText(context,"Clicked Pokemon //todo add pokemon details screen", Toast.LENGTH_LONG)
                                 }
                             }
                             .padding(16.dp)
                     )
-                    if(i < pokemonList.size) {
+                    if(i < state.pokemonList.size) {
                         Divider(modifier = Modifier.padding(
                             horizontal = 16.dp
                         ))
